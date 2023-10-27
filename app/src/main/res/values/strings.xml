@@ -3,4 +3,12 @@
     <string name="hej">Hej</string>
     <string name="height_with_param" translatable="false">Height with parameters</string>
     <string name="android" translatable="false">android</string>
+    <string name="title">BMI calculator</string>
+    <string name="enter_your_height_in_m">Enter your height in meters</string>
+    <string name="enter_your_weight">Enter your weight</string>
+    <string name="calculate">Calculate</string>
+    <string name="your_bmi">Your BMI</string>
+    <string name="see_the_history">See the history</string>
+    <string name="learn_more">Learn more</string>
+    <string name="bmi_result_format">%1$s\n%2$s</string>
 </resources>

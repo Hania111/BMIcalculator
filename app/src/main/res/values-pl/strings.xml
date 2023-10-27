@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">My Application2</string>
     <string name="hej">cześć</string>
+    <string name="title">Kalkulator BMI</string>
 </resources>
