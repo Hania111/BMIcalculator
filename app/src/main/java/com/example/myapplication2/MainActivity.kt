@@ -1,6 +1,7 @@
 package com.example.myapplication2
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,35 +11,40 @@ import android.widget.TextView
 import kotlin.math.round
 
 class MainActivity : AppCompatActivity() {
+
+    private var currentInterpretation: Pair<String, String>? = null
+    private var currentBMI : Double = 0.0
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //getString(R.string.height_with_param)
-        val button = findViewById<Button>(R.id.buttonCalculate)
-        button.setOnClickListener{
-            printBMI()
+        val result = findViewById<TextView>(R.id.resultTV)
+
+        val button_calculate = findViewById<Button>(R.id.buttonCalculate)
+        button_calculate.setOnClickListener{
+            printBMI(result)
+        }
+
+        result.setOnClickListener {
+            openBMIdescriptionActivity()
         }
     }
 
-    private fun printBMI (){
-        val bmi = calculateBMI()
-        val interpretation = interpretBMI(bmi)
-        val result = findViewById<TextView>(R.id.resultTV)
-        val formattedResult = getString(R.string.bmi_result_format, bmi.toString(), interpretation.first)
+    private fun printBMI (result : TextView){
+        calculateBMI()
+        currentInterpretation = interpretBMI(currentBMI)
+        val formattedResult = getString(R.string.bmi_result_format, currentBMI.toString(), currentInterpretation!!.first)
         result.text = formattedResult
-        result.setBackgroundColor(Color.parseColor(interpretation.second))
+        result.setBackgroundColor(Color.parseColor(currentInterpretation!!.second))
     }
 
-    private fun calculateBMI(): Double {
+    private fun calculateBMI() {
         val height = findViewById<EditText>(R.id.editTextHeight).text.toString().toDoubleOrNull()
         val weight = findViewById<EditText>(R.id.editTextWeight).text.toString().toDoubleOrNull()
-        val result = findViewById<TextView>(R.id.resultTV)
-        var bmi: Double = 0.0
+        currentBMI = 0.0
         if (height != null && weight != null) {
-            bmi = String.format("%.2f",weight / (height * height)).toDouble()
+            currentBMI = String.format("%.2f", weight / (height * height)).toDouble()
         }
-        return bmi
     }
 
     private fun interpretBMI (bmi: Double) : Pair<String, String>{
@@ -53,6 +59,14 @@ class MainActivity : AppCompatActivity() {
             bmi >= 40 -> Pair("Obese Class III", "#FF0000")
             else -> Pair("Invalid BMI", "#FF0000")
         }
+    }
+
+    public fun openBMIdescriptionActivity(){
+        val intent = Intent(this, BMI_description::class.java)
+        intent.putExtra("BMI_INTERPRETATION_KEY", currentInterpretation?.first)
+        intent.putExtra("BMI_COLOR_KEY", currentInterpretation?.second)
+        intent.putExtra("BMI", currentBMI.toString())
+        startActivity(intent)
     }
 
 }
