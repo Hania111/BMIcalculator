@@ -12,4 +12,7 @@
     <string name="learn_more">Learn more</string>
     <string name="bmi_result_format">%1$s\n%2$s</string>
     <string name="returnButton">Return</string>
+    <string name="change_metric">Change metric</string>
+    <string name="switch_metrics">Switch metrics</string>
+    <string name="about_author">About author</string>
 </resources>

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.PopupMenu
 import android.widget.TextView
 import kotlin.math.round
 
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val result = findViewById<TextView>(R.id.resultTV)
+        val button_menu = findViewById<ImageButton>(R.id.ButtonMenu)
 
         val button_calculate = findViewById<Button>(R.id.buttonCalculate)
         button_calculate.setOnClickListener{
@@ -27,6 +30,10 @@ class MainActivity : AppCompatActivity() {
 
         result.setOnClickListener {
             openBMIdescriptionActivity()
+        }
+
+        button_menu.setOnClickListener(){
+            menu(button_menu)
         }
     }
 
@@ -69,4 +76,34 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun openHistoryActivity(){
+        val intent = Intent(this, history::class.java)
+        startActivity(intent)
+    }
+
+    fun openAboutAuthorActivity(){
+        val intent = Intent(this, About_author::class.java)
+        startActivity(intent)
+    }
+    fun menu(button_menu : ImageButton){
+        val popup = PopupMenu(this, button_menu)
+        popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+        popup.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.history_option -> {
+                    openHistoryActivity()
+                    true
+                }
+                R.id.switch_metrics -> {
+                    true
+                }
+                R.id.about_author -> {
+                    openAboutAuthorActivity()
+                    true
+                }
+                else -> false
+            }
+        }
+        popup.show()
+    }
 }
