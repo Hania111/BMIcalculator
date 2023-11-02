@@ -13,7 +13,7 @@ class BMI_description : AppCompatActivity() {
         setContentView(R.layout.activity_bmi_description)
 
         val interpretation = intent.getStringExtra("BMI_INTERPRETATION_KEY")
-        val color = intent.getStringExtra("BMI_COLOR_KEY")
+        val color : Int = intent.getIntExtra("BMI_COLOR_KEY", Color.parseColor("#00000000"))
         val bmi : String? = intent.getStringExtra("BMI")
         val returnButton = findViewById<Button>(R.id.buttonReturn)
 
@@ -57,11 +57,11 @@ class BMI_description : AppCompatActivity() {
         description.text = getBmiInfo(category)
     }
 
-    fun printBMI (Bmi: String, cateogry: String, color: String){
+    fun printBMI (Bmi: String, cateogry: String, color: Int){
         val result = findViewById<TextView>(R.id.resultTV)
         val formattedResult = getString(R.string.bmi_result_format, Bmi, cateogry)
         result.text = formattedResult
-        result.setBackgroundColor(Color.parseColor(color))
+        result.setBackgroundColor(color)
     }
 
     fun printError (){
@@ -72,3 +72,5 @@ class BMI_description : AppCompatActivity() {
 
 
 }
+
+

@@ -4,7 +4,7 @@
     <string name="height_with_param" translatable="false">Height with parameters</string>
     <string name="android" translatable="false">android</string>
     <string name="title">BMI calculator</string>
-    <string name="enter_your_height_in_m">Enter your height in meters</string>
+    <string name="enter_your_height">Enter your height</string>
     <string name="enter_your_weight">Enter your weight</string>
     <string name="calculate">Calculate</string>
     <string name="your_bmi">Your BMI</string>
@@ -15,4 +15,6 @@
     <string name="change_metric">Change metric</string>
     <string name="switch_metrics">Switch metrics</string>
     <string name="about_author">About author</string>
+    <string name="metric_system">Metric System</string>
+    <string name="imperial_system">Imperial System</string>
 </resources>
