@@ -1,7 +1,9 @@
 package com.example.myapplication2
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,14 +26,29 @@ class MainActivity : AppCompatActivity() {
     private var currentBMI : Double = 0.0
     private var currentUnitSystem: UnitSystem = MetricSystem()
 
+    private lateinit var result: TextView
+    private lateinit var button_menu: ImageButton
+    private lateinit var button_calculate: Button
+    private lateinit var heihtMessageTV: TextView
+    private lateinit var weightMessageTV: TextView
+
+    private val PREFS_NAME = "bmi_prefs"
+    private val sharedPref: SharedPreferences by lazy {
+        getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    }
+
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val result = findViewById<TextView>(R.id.resultTV)
-        val button_menu = findViewById<ImageButton>(R.id.ButtonMenu)
 
-        val button_calculate = findViewById<Button>(R.id.buttonCalculate)
+        result = findViewById<TextView>(R.id.resultTV)
+        button_menu = findViewById<ImageButton>(R.id.ButtonMenu)
+        button_calculate = findViewById<Button>(R.id.buttonCalculate)
+        heihtMessageTV = findViewById<TextView>(R.id.HeightTV)
+        weightMessageTV = findViewById<TextView>(R.id.WeightTV)
+        setMessage()
+
         button_calculate.setOnClickListener{
             printBMI(result)
         }
@@ -64,6 +81,7 @@ class MainActivity : AppCompatActivity() {
             val convertedWeight = currentUnitSystem.convertWeight(weight)
             currentBMI = String.format("%.2f", convertedWeight / (convertedHeight * convertedHeight)).toDouble()
         }
+        saveToHistory(weight, height)
     }
 
     private fun interpretBMI (bmi: Double) : Pair<String, Int> {
@@ -130,18 +148,22 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.metric_option -> {
                     switchToMetricSystem()
-                    clearChoice()
                     true
                 }
                 R.id.imperial_option -> {
                     switchToImperialSystem()
-                    clearChoice()
                     true
                 }
                 else -> false
+            }.also {
+                if (it) { // If either metric or imperial option was selected
+                    clearChoice()
+                    setMessage()
+                }
             }
         }
         popup.show()
+
     }
 
     fun switchToMetricSystem(){
@@ -161,5 +183,34 @@ class MainActivity : AppCompatActivity() {
         currentColor = Color.parseColor("#00000000")
         result.setBackgroundColor(currentColor!!)
     }
+
+    fun setMessage(){
+        heihtMessageTV.text = currentUnitSystem.unitHeightMessage()
+        weightMessageTV.text = currentUnitSystem.unitWeightMessage()
+    }
+
+    private fun saveToHistory(weight: Double?, height: Double?) {
+        val historyList = getHistoryFromPreferences().toMutableList()
+        val newData = "$currentBMI, $weight, $height, ${currentUnitSystem.javaClass.simpleName}"
+
+        if (historyList.size >= 10) {
+            historyList.removeAt(0)
+        }
+        historyList.add(newData)
+
+        with(sharedPref.edit()) {
+            putStringSet("history", historyList.toSet())
+            apply()
+        }
+    }
+
+    private fun getHistoryFromPreferences(): List<String> {
+        return sharedPref.getStringSet("history", emptySet())?.toList() ?: emptyList()
+    }
+
+
+
+
+
 
 }
