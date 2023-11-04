@@ -1,9 +1,7 @@
 package com.example.myapplication2
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,18 +11,28 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.datastore.core.DataStore
 import com.example.myapplication2.unit.system.ImperialSystem
 import com.example.myapplication2.unit.system.MetricSystem
 import com.example.myapplication2.unit.system.UnitSystem
-import kotlin.math.round
+
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.preferencesKey
+import androidx.datastore.preferences.createDataStore
+import androidx.lifecycle.lifecycleScope
+//import com.plcoding.datastoreandroid.databinding.ActivityMainBinding
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
 
     private var currentInterpretation: String? = null
     private var currentColor : Int? = Color.parseColor("#00000000")
-    private var currentBMI : Double = 0.0
     private var currentUnitSystem: UnitSystem = MetricSystem()
+    private val maxRecords = 10
+    private var currentRecord = 0
+    private var latestBmiRecord : BmiRecord? = null
 
     private lateinit var result: TextView
     private lateinit var button_menu: ImageButton
@@ -32,25 +40,30 @@ class MainActivity : AppCompatActivity() {
     private lateinit var heihtMessageTV: TextView
     private lateinit var weightMessageTV: TextView
 
-    private val PREFS_NAME = "bmi_prefs"
-    private val sharedPref: SharedPreferences by lazy {
-        getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    }
+
+    private lateinit var dataStore: DataStore<androidx.datastore.preferences.core.Preferences>
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        result = findViewById<TextView>(R.id.resultTV)
-        button_menu = findViewById<ImageButton>(R.id.ButtonMenu)
-        button_calculate = findViewById<Button>(R.id.buttonCalculate)
-        heihtMessageTV = findViewById<TextView>(R.id.HeightTV)
-        weightMessageTV = findViewById<TextView>(R.id.WeightTV)
-        setMessage()
+        configuration()
+
 
         button_calculate.setOnClickListener{
-            printBMI(result)
+            latestBmiRecord = createBMIRecord()  // wyliczenia bmi
+            printBMI()
+
+            // zapisywanie do sataStore
+            lifecycleScope.launch{
+                latestBmiRecord?.let { it1 -> saveBmiRecord(currentRecord.toString(), it1) }
+            }
+            lifecycleScope.launch{
+                result.text = readBmiRecord(key = currentRecord.toString())
+            }
+            currentRecord += 1
+
         }
 
         result.setOnClickListener {
@@ -62,26 +75,52 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun printBMI (result : TextView){
-        calculateBMI()
-        val interpertation  = interpretBMI(currentBMI)
+    private fun createBMIRecord(): BmiRecord{
+        val height = findViewById<EditText>(R.id.editTextHeight).text.toString().toDoubleOrNull()
+        val weight = findViewById<EditText>(R.id.editTextWeight).text.toString().toDoubleOrNull()
+        return BmiRecord(calculateBMI(height,weight), weight, height, currentUnitSystem)
+    }
+
+    private fun configuration(){
+        result = findViewById<TextView>(R.id.resultTV)
+        button_menu = findViewById<ImageButton>(R.id.ButtonMenu)
+        button_calculate = findViewById<Button>(R.id.buttonCalculate)
+        heihtMessageTV = findViewById<TextView>(R.id.HeightTV)
+        weightMessageTV = findViewById<TextView>(R.id.WeightTV)
+        setMessage()
+        dataStore = createDataStore(name = "history")
+    }
+
+    private suspend fun saveBmiRecord(key: String, bmiRecord: BmiRecord){
+        val dataStoreKey = preferencesKey<String>(key)
+        dataStore.edit {settings ->
+            settings[dataStoreKey] = bmiRecord.toJson()
+        }
+    }
+
+    private suspend fun readBmiRecord(key: String) : String? {
+        val dataStoreKey = preferencesKey<String>(key)
+        val preferences = dataStore.data.first()
+        return preferences[dataStoreKey]
+    }
+
+    private fun printBMI (){
+        val interpertation  = interpretBMI(latestBmiRecord!!.bmi)
         currentInterpretation = interpertation.first
         currentColor = interpertation.second
-        val formattedResult = getString(R.string.bmi_result_format, currentBMI.toString(), currentInterpretation)
+        val formattedResult = getString(R.string.bmi_result_format, latestBmiRecord!!.bmi.toString(), currentInterpretation)
         result.text = formattedResult
         result.setBackgroundColor(currentColor!!)
     }
 
-    private fun calculateBMI() {
-        val height = findViewById<EditText>(R.id.editTextHeight).text.toString().toDoubleOrNull()
-        val weight = findViewById<EditText>(R.id.editTextWeight).text.toString().toDoubleOrNull()
-        currentBMI = 0.0
+    private fun calculateBMI(height : Double?, weight : Double?):Double {
+        var currentBMI = 0.0
         if (height != null && weight != null) {
             val convertedHeight = currentUnitSystem.convertHeight(height)
             val convertedWeight = currentUnitSystem.convertWeight(weight)
             currentBMI = String.format("%.2f", convertedWeight / (convertedHeight * convertedHeight)).toDouble()
         }
-        saveToHistory(weight, height)
+        return currentBMI
     }
 
     private fun interpretBMI (bmi: Double) : Pair<String, Int> {
@@ -99,22 +138,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     public fun openBMIdescriptionActivity(){
-        if (currentBMI!= 0.0){
-            val intent = Intent(this, BMI_description::class.java)
+        if (latestBmiRecord!!.bmi!= 0.0){
+            val intent = Intent(this, BmiDescriptionActivity::class.java)
             intent.putExtra("BMI_INTERPRETATION_KEY", currentInterpretation)
             intent.putExtra("BMI_COLOR_KEY", currentColor)
-            intent.putExtra("BMI", currentBMI.toString())
+            intent.putExtra("BMI", latestBmiRecord!!.bmi.toString())
             startActivity(intent)
         }
     }
 
     fun openHistoryActivity(){
-        val intent = Intent(this, history::class.java)
+        val intent = Intent(this, HistoryActivity::class.java)
+        intent.putExtra("CURRENT_RECORD", currentRecord)
+        intent.putExtra("MAX_RECORDS", maxRecords)
         startActivity(intent)
     }
 
     fun openAboutAuthorActivity(){
-        val intent = Intent(this, About_author::class.java)
+        val intent = Intent(this, AboutAuthorActivity::class.java)
         startActivity(intent)
     }
     fun menu(button_menu : ImageButton){
@@ -188,29 +229,6 @@ class MainActivity : AppCompatActivity() {
         heihtMessageTV.text = currentUnitSystem.unitHeightMessage()
         weightMessageTV.text = currentUnitSystem.unitWeightMessage()
     }
-
-    private fun saveToHistory(weight: Double?, height: Double?) {
-        val historyList = getHistoryFromPreferences().toMutableList()
-        val newData = "$currentBMI, $weight, $height, ${currentUnitSystem.javaClass.simpleName}"
-
-        if (historyList.size >= 10) {
-            historyList.removeAt(0)
-        }
-        historyList.add(newData)
-
-        with(sharedPref.edit()) {
-            putStringSet("history", historyList.toSet())
-            apply()
-        }
-    }
-
-    private fun getHistoryFromPreferences(): List<String> {
-        return sharedPref.getStringSet("history", emptySet())?.toList() ?: emptyList()
-    }
-
-
-
-
 
 
 }
