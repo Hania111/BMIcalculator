@@ -59,9 +59,9 @@ class MainActivity : AppCompatActivity() {
             lifecycleScope.launch{
                 latestBmiRecord?.let { it1 -> saveBmiRecord(currentRecord.toString(), it1) }
             }
-            lifecycleScope.launch{
-                result.text = readBmiRecord(key = currentRecord.toString())
-            }
+//            lifecycleScope.launch{
+//                result.text = readBmiRecord(key = currentRecord.toString())
+//            }
             currentRecord += 1
 
         }
@@ -78,7 +78,8 @@ class MainActivity : AppCompatActivity() {
     private fun createBMIRecord(): BmiRecord{
         val height = findViewById<EditText>(R.id.editTextHeight).text.toString().toDoubleOrNull()
         val weight = findViewById<EditText>(R.id.editTextWeight).text.toString().toDoubleOrNull()
-        return BmiRecord(calculateBMI(height,weight), weight, height, currentUnitSystem)
+        //return BmiRecord(calculateBMI(height,weight), weight, height, currentUnitSystem)
+        return BmiRecord(calculateBMI(height,weight), weight, height, currentUnitSystem.unitWeight(), currentUnitSystem.unitHeight())
     }
 
     private fun configuration(){
@@ -158,6 +159,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, AboutAuthorActivity::class.java)
         startActivity(intent)
     }
+
     fun menu(button_menu : ImageButton){
         val popup = PopupMenu(this, button_menu)
         popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)

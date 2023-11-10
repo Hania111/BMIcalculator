@@ -17,4 +17,12 @@ class ImperialSystem : UnitSystem{
     override fun unitWeightMessage(): String {
         return "Enter weight in pounds"
     }
+
+    override fun unitHeight(): String {
+        return "in"
+    }
+
+    override fun unitWeight(): String {
+        return "lb"
+    }
 }

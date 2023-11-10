@@ -7,8 +7,9 @@ data class BmiRecord(
     val bmi: Double,
     val weight: Double?,
     val height: Double?,
-    val unitSystem: UnitSystem?,
-    //val timestamp: Long // można użyć do sortowania i usuwania najstarszych rekordów
+    val weightUnit: String,
+    val heightUnit: String,
+    //val unitSystem: UnitSystem?,
 ){
     fun toJson(): String {
         return Gson().toJson(this)

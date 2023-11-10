@@ -5,4 +5,8 @@ interface UnitSystem {
     fun convertWeight(value: Double): Double
     fun unitHeightMessage():String
     fun unitWeightMessage():String
+
+    fun unitHeight():String
+
+    fun unitWeight():String
 }
