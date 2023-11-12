@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="_8dp">8dp</dimen>
+    <dimen name="minMargine">8dp</dimen>
+    <dimen name="pictureMarginBottom">95dp</dimen>
+    <dimen name="photoWidth">91dp</dimen>
+    <dimen name="photoHeight">84dp</dimen>
+    <dimen name="pictureMargineTop">552dp</dimen>
+    <dimen name="standardTextSize">16sp</dimen>
 </resources>

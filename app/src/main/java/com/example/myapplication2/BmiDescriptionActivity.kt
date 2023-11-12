@@ -15,10 +15,9 @@ class BmiDescriptionActivity : AppCompatActivity() {
         val interpretation = intent.getStringExtra("BMI_INTERPRETATION_KEY")
         val color : Int = intent.getIntExtra("BMI_COLOR_KEY", Color.parseColor("#00000000"))
         val bmi : String? = intent.getStringExtra("BMI")
-        val returnButton = findViewById<Button>(R.id.buttonReturn)
 
 
-        if (interpretation != null && bmi != null && color != null) {
+        if (interpretation != null && bmi != null) {
             printBMI(bmi, interpretation, color)
         }
         else printError()
@@ -27,30 +26,22 @@ class BmiDescriptionActivity : AppCompatActivity() {
             printBmiInfo(interpretation)
         }
 
-        returnButton.setOnClickListener {
-            openMainActivity()
-        }
-
     }
 
-    public fun openMainActivity(){
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+fun getBmiInfo(category: String): String {
+    return when (category) {
+        getString(R.string.bmi_category_severely_underweight) -> getString(R.string.bmi_severely_underweight)
+        getString(R.string.bmi_category_underweight)-> getString(R.string.bmi_underweight)
+        getString(R.string.bmi_category_mildly_underweight) -> getString(R.string.bmi_mildly_underweight)
+        getString(R.string.bmi_category_normal) -> getString(R.string.bmi_normal)
+        getString(R.string.bmi_category_overweight) -> getString(R.string.bmi_overweight)
+        getString(R.string.bmi_category_obese_class_i)-> getString(R.string.bmi_obese_class_i)
+        getString(R.string.bmi_category_obese_class_ii) -> getString(R.string.bmi_obese_class_ii)
+        getString(R.string.bmi_category_obese_class_iii) -> getString(R.string.bmi_obese_class_iii)
+        else -> getString(R.string.bmi_invalid_category)
     }
+}
 
-    fun getBmiInfo(category: String): String {
-        return when (category) {
-            "Severely underweight" -> "This is classified as severely underweight. It means that the body weight is significantly below what is recommended for one's height, which may lead to health issues."
-            "Underweight" -> "This is classified as underweight. It means that the body weight is below what is recommended for one's height. Individuals in this range might experience a lack of energy or health problems related to malnutrition."
-            "Mildly underweight" -> "This is classified as mildly underweight. The body weight is slightly below the norm, but the risk of health issues is lesser than that of being severely underweight."
-            "Normal" -> "This is classified as normal weight. Individuals with a BMI in this range generally have the lowest risk of health problems related to their body weight."
-            "Overweight" -> "This is classified as overweight. Having a body weight above the recommended range may increase the risk of various health issues."
-            "Obese Class I" -> "This is classified as Obese Class I. Individuals in this BMI range face an elevated risk of health problems associated with excessive body weight."
-            "Obese Class II" -> "This is classified as Obese Class II. This condition poses an even higher risk of health issues than Class I obesity."
-            "Obese Class III" -> "This is classified as Obese Class III, also known as extreme obesity. Individuals with such a BMI have a very high risk of severe health problems related to excessive body weight."
-            else -> "Invalid BMI category which doesn't fit into any of the above classifications."
-        }
-    }
 
     fun printBmiInfo(category: String){
         val description = findViewById<TextView>(R.id.descriptionTV)
@@ -66,7 +57,7 @@ class BmiDescriptionActivity : AppCompatActivity() {
 
     fun printError (){
         val result = findViewById<TextView>(R.id.resultTV)
-        result.text = "you have to calculate your bmi first"
+        result.text = getString(R.string.ErrorDescription)
     }
 
 

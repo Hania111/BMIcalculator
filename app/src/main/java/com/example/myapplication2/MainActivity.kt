@@ -50,20 +50,8 @@ class MainActivity : AppCompatActivity() {
 
         configuration()
 
-
         button_calculate.setOnClickListener{
-            latestBmiRecord = createBMIRecord()  // wyliczenia bmi
-            printBMI()
-
-            // zapisywanie do sataStore
-            lifecycleScope.launch{
-                latestBmiRecord?.let { it1 -> saveBmiRecord(currentRecord.toString(), it1) }
-            }
-//            lifecycleScope.launch{
-//                result.text = readBmiRecord(key = currentRecord.toString())
-//            }
-            currentRecord += 1
-
+            handleCalculateButtonClick()
         }
 
         result.setOnClickListener {
@@ -75,6 +63,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleCalculateButtonClick(){
+        latestBmiRecord = createBMIRecord()  // wyliczenia bmi
+        printBMI()
+        lifecycleScope.launch{
+            latestBmiRecord?.let { it1 -> saveBmiRecord(currentRecord.toString(), it1) }
+        }
+        currentRecord += 1
+    }
     private fun createBMIRecord(): BmiRecord{
         val height = findViewById<EditText>(R.id.editTextHeight).text.toString().toDoubleOrNull()
         val weight = findViewById<EditText>(R.id.editTextWeight).text.toString().toDoubleOrNull()
@@ -89,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         heihtMessageTV = findViewById<TextView>(R.id.HeightTV)
         weightMessageTV = findViewById<TextView>(R.id.WeightTV)
         setMessage()
-        dataStore = createDataStore(name = "history")
+        dataStore = createDataStore(name = getString(R.string.historyDS))
     }
 
     private suspend fun saveBmiRecord(key: String, bmiRecord: BmiRecord){

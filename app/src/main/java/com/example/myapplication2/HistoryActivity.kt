@@ -36,10 +36,9 @@ class HistoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_history)
         configuration()
 
-        dataStore = createDataStore(name = "history")
+        dataStore = createDataStore(name = getString(R.string.historyDS))
         lifecycleScope.launch{
             val records = createListOfBmiRecords()
-            //val adapter = HistoryAdapter(records)
             historyRV.adapter = HistoryAdapter(records)
         }
 
@@ -57,23 +56,7 @@ class HistoryActivity : AppCompatActivity() {
     private suspend fun readBmiRecord(key: String) : String? {
         val dataStoreKey = preferencesKey<String>(key)
         val preferences = dataStore.data.first()
-        return preferences[dataStoreKey]// ?: throw NoSuchElementException("No record found for key: $key")
-    }
-
-    private fun displayBmiRecords(textView: TextView) {  // to test display record as objects
-        val stringBuilder = StringBuilder()
-        lifecycleScope.launch {
-            val bmiRecordsList = createListOfBmiRecords()
-            bmiRecordsList.forEach { record ->
-                if (record != null) {
-                    stringBuilder.append("BMI: ${record.bmi}, Weight: ${record.weight}${record.weightUnit}, Height: ${record.height}${record.heightUnit}\n")
-                } else {
-                    stringBuilder.append("No data available\n")
-                }
-            }
-            textView.text = stringBuilder.toString().trim()
-        }
-
+        return preferences[dataStoreKey]
     }
 
     private suspend fun createListOfBmiRecords(): List<BmiRecord> {
@@ -94,17 +77,12 @@ class HistoryActivity : AppCompatActivity() {
             bmiRecord = jsonStrings?.let { BmiRecord.fromJson(it) }
             return bmiRecord
         } catch (e: JsonSyntaxException){
-            Log.e("parseBmiRecords", "Error parsing JSON string: ${e.message}")
-            Log.e("parseBmiRecords", "JSON causing error: $jsonStrings")
+            Log.e(getString(R.string.parsebmirecords),
+                getString(R.string.error_parsing_json_string, e.message))
+            Log.e(getString(R.string.parsebmirecords),
+                getString(R.string.json_causing_error, jsonStrings))
         }
         return bmiRecord
-//        return try {
-//            BmiRecord.fromJson(jsonStrings)
-//        } catch (e: JsonSyntaxException) {
-//            Log.e("parseBmiRecords", "Error parsing JSON string: ${e.message}")
-//            Log.e("parseBmiRecords", "JSON causing error: $jsonStrings")
-//            throw JsonSyntaxException("Error parsing JSON string: ${e.message}")
-//        }
     }
 
 

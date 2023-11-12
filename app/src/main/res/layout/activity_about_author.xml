@@ -7,42 +7,82 @@
     android:background="#FAE9D8"
     tools:context=".AboutAuthorActivity">
 
-    <Button
-        android:id="@+id/buttonReturn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="587dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="96dp"
-        android:text="@string/returnButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/authorDescriptionTV"
         android:layout_width="223dp"
         android:layout_height="127dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/minMargine"
         android:layout_marginTop="404dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/minMargine"
         android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="227dp"
-        android:layout_height="386dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="8dp"
+
+    <ImageButton
+        android:id="@+id/meIB"
+        android:layout_width="272dp"
+        android:layout_height="293dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.176"
+        app:srcCompat="@drawable/hanna_olechowska_zdjecie" />
+
+    <ImageButton
+        android:id="@+id/mountainsIB"
+        android:layout_width="@dimen/photoWidth"
+        android:layout_height="@dimen/photoHeight"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="@dimen/pictureMargineTop"
+        android:layout_marginEnd="@dimen/minMargine"
+        android:layout_marginBottom="@dimen/pictureMarginBottom"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.156"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mountains" />
+
+    <ImageButton
+        android:id="@+id/dogIB"
+        android:layout_width="@dimen/photoWidth"
+        android:layout_height="@dimen/photoHeight"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="@dimen/pictureMargineTop"
+        android:layout_marginEnd="@dimen/minMargine"
+        android:layout_marginBottom="@dimen/pictureMarginBottom"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/hanna_olechowska_zdjecie" />
+        app:srcCompat="@drawable/dog" />
+
+    <ImageButton
+        android:id="@+id/mottoIB"
+        android:layout_width="@dimen/photoWidth"
+        android:layout_height="@dimen/photoHeight"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="@dimen/pictureMargineTop"
+        android:layout_marginEnd="@dimen/minMargine"
+        android:layout_marginBottom="@dimen/pictureMarginBottom"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/question_mark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
