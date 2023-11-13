@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <EditText
+        android:id="@+id/editTextWeight"
+        android:layout_width="216dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/minMargine"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.757"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TitleTV" />
+
+    <TextView
+        android:id="@+id/HeightTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/minMargine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHeight" />
+
+    <Button
+        android:id="@+id/buttonCalculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/minMargine"
+        android:background="#FCCCC4"
+        android:text="@string/calculate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HeightTV"
+        app:rippleColor="#EF7C68" />
+
+    <TextView
+        android:id="@+id/resultTV"
+        android:layout_width="253dp"
+        android:layout_height="157dp"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/minMargine"
+        android:autoSizeTextType="uniform"
+        android:gravity="center_horizontal"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.456"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCalculate" />
+
+    <TextView
+        android:id="@+id/TitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/minMargine"
+        android:fontFamily="sans-serif"
+        android:text="@string/title"
+        android:textColor="#3C3F41"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextHeight"
+        android:layout_width="216dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/minMargine"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.148"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TitleTV" />
+
+    <TextView
+        android:id="@+id/WeightTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/minMargine"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/minMargine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.675"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHeight" />
+
+    <ImageButton
+        android:id="@+id/ButtonMenu"
+        android:layout_width="55dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="325dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="421dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/resultTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.783"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/menu_button" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

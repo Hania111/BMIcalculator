@@ -6,4 +6,9 @@
     <color name="baby_pink">#F4C2C2</color>
     <color name="matcha_green">#91C788</color>
     <color name="beige_pink">#FAE9D8</color>
+    <string name="category_normal">#93C572</string>
+    <string name="category_dark_red">#CC0000</string>
+    <string name="category_red">#FF6666</string>
+    <string name="category_dark_dark_red">#FF0000</string>
+    <string name="black">#00000000</string>
 </resources>

@@ -46,5 +46,7 @@
     <string name="error_parsing_json_string">Error parsing JSON string: %1$s</string>
     <string name="json_causing_error">JSON causing error: %1$s</string>
     <string name="historyDS">history</string>
+    <string name="category_pink">#FFCCCC</string>
+    <string name="invalid_bmi">Invalid BMI</string>
 
 </resources>

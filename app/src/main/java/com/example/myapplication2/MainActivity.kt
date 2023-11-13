@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
     private fun createBMIRecord(): BmiRecord{
         val height = findViewById<EditText>(R.id.editTextHeight).text.toString().toDoubleOrNull()
         val weight = findViewById<EditText>(R.id.editTextWeight).text.toString().toDoubleOrNull()
-        //return BmiRecord(calculateBMI(height,weight), weight, height, currentUnitSystem)
         return BmiRecord(calculateBMI(height,weight), weight, height, currentUnitSystem.unitWeight(), currentUnitSystem.unitHeight())
     }
 
@@ -122,15 +121,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun interpretBMI (bmi: Double) : Pair<String, Int> {
         return when {
-            bmi < 16 -> Pair("Severely underweight", Color.parseColor("#CC0000"))
-            bmi in 16.0..16.99 -> Pair("Underweight", Color.parseColor("#FF6666"))
-            bmi in 17.0..18.49 -> Pair("Mildly underweight", Color.parseColor("#FFCCCC"))
-            bmi in 18.5..24.99 -> Pair("Normal", Color.parseColor("#93C572"))
-            bmi in 25.0..29.99 -> Pair("Overweight", Color.parseColor("#FFCCCC"))
-            bmi in 30.0..34.99 -> Pair("Obese Class I", Color.parseColor("#FF6666"))
-            bmi in 35.0..39.99 -> Pair("Obese Class II", Color.parseColor("#CC0000"))
-            bmi >= 40 -> Pair("Obese Class III", Color.parseColor("#FF0000"))
-            else -> Pair("Invalid BMI", Color.parseColor("#FF0000"))
+            bmi < 16 -> Pair(getString(R.string.bmi_category_severely_underweight), Color.parseColor(getString(R.string.category_dark_red)))
+            bmi in 16.0..16.99 -> Pair(getString(R.string.bmi_category_underweight), Color.parseColor(getString(R.string.category_red)))
+            bmi in 17.0..18.49 -> Pair(getString(R.string.bmi_category_mildly_underweight), Color.parseColor(getString(R.string.category_pink)))
+            bmi in 18.5..24.99 -> Pair( getString(R.string.bmi_category_normal), Color.parseColor(getString(R.string.category_normal)))
+            bmi in 25.0..29.99 -> Pair(getString(R.string.bmi_category_overweight), Color.parseColor(getString(R.string.category_pink)))
+            bmi in 30.0..34.99 -> Pair( getString(R.string.bmi_category_obese_class_i), Color.parseColor(getString(R.string.category_red)))
+            bmi in 35.0..39.99 -> Pair(getString(R.string.bmi_category_obese_class_ii),Color.parseColor(getString(R.string.category_dark_red)))
+            bmi >= 40 -> Pair( getString(R.string.bmi_category_obese_class_iii), Color.parseColor(getString(R.string.category_dark_dark_red)))
+            else -> Pair(getString(R.string.invalid_bmi), Color.parseColor(getString(R.string.category_dark_dark_red)))
         }
     }
 
