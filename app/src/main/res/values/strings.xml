@@ -17,4 +17,37 @@
     <string name="about_author">About author</string>
     <string name="metric_system">Metric System</string>
     <string name="imperial_system">Imperial System</string>
+    <string name="weight_text">Weight: %1$s%2$s</string>
+    <string name="height_text">Height: %1$s%2$s</string>
+    <string name="bmi_text">Bmi: %1$s</string>
+    <string name="author_info">I am a student in my third year of Applied Computer Science at Wrocław University of Science and Technology. I am also a scout leader at 23th Wrocławska Drużyna Harcerska "Wilki".</string>
+    <string name="dog_info">I\'m a big fan of dogs. Although \nI don\'t have one at the moment, \nI aspire to have a Shetland Sheepdog in the future.</string>
+    <string name="mountain_info">I enjoy mountain treks.</string>
+    <string name="motto_info">My personal motto is,\n\'Another day, another slay.\'</string>
+    <string name="bmi_severely_underweight">This is classified as severely underweight. It means that the body weight is significantly below what is recommended for one\'s height, which may lead to health issues.</string>
+    <string name="bmi_underweight">This is classified as underweight. It means that the body weight is below what is recommended for one\'s height. Individuals in this range might experience a lack of energy or health problems related to malnutrition.</string>
+    <string name="bmi_mildly_underweight">This is classified as mildly underweight. The body weight is slightly below the norm, but the risk of health issues is lesser than that of being severely underweight.</string>
+    <string name="bmi_normal">This is classified as normal weight. Individuals with a BMI in this range generally have the lowest risk of health problems related to their body weight.</string>
+    <string name="bmi_overweight">This is classified as overweight. Having a body weight above the recommended range may increase the risk of various health issues.</string>
+    <string name="bmi_obese_class_i">This is classified as Obese Class I. Individuals in this BMI range face an elevated risk of health problems associated with excessive body weight.</string>
+    <string name="bmi_obese_class_ii">This is classified as Obese Class II. This condition poses an even higher risk of health issues than Class I obesity.</string>
+    <string name="bmi_obese_class_iii">This is classified as Obese Class III, also known as extreme obesity. Individuals with such a BMI have a very high risk of severe health problems related to excessive body weight.</string>
+    <string name="bmi_invalid_category">Invalid BMI category which doesn\'t fit into any of the above classifications.</string>
+    <string name="ErrorDescription">You have to calculate your bmi first</string>
+    <string name="bmi_category_severely_underweight">Severely underweight</string>
+    <string name="bmi_category_underweight">Underweight</string>
+    <string name="bmi_category_mildly_underweight">Mildly underweight</string>
+    <string name="bmi_category_normal">Normal</string>
+    <string name="bmi_category_overweight">Overweight</string>
+    <string name="bmi_category_obese_class_i">Obese Class I</string>
+    <string name="bmi_category_obese_class_ii">Obese Class II</string>
+    <string name="bmi_category_obese_class_iii">Obese Class III</string>
+    <string name="parsebmirecords">parseBmiRecords</string>
+    <string name="error_parsing_json_string">Error parsing JSON string: %1$s</string>
+    <string name="json_causing_error">JSON causing error: %1$s</string>
+    <string name="historyDS">history</string>
+    <string name="category_pink">#FFCCCC</string>
+    <string name="invalid_bmi">Invalid BMI</string>
+    <string name="please_enter_valid_height_and_weight_values">Please enter valid height and weight values.</string>
+
 </resources>

@@ -28,9 +28,10 @@ class HistoryAdapter (private val BmiList : List<BmiRecord>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = BmiList[position]
-        holder.weightTV.text = currentItem.weight.toString()
-        holder.heightTV.text = currentItem.height.toString()
-        holder.bmiTV.text = currentItem.bmi.toString()
+        val context = holder.itemView.context
+        holder.weightTV.text = context.getString(R.string.weight_text, currentItem.weight.toString(), currentItem.weightUnit)
+        holder.heightTV.text = context.getString(R.string.height_text, currentItem.height.toString(), currentItem.heightUnit)
+        holder.bmiTV.text = context.getString(R.string.bmi_text, currentItem.bmi.toString())
     }
 }
 
