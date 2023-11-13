@@ -48,5 +48,6 @@
     <string name="historyDS">history</string>
     <string name="category_pink">#FFCCCC</string>
     <string name="invalid_bmi">Invalid BMI</string>
+    <string name="please_enter_valid_height_and_weight_values">Please enter valid height and weight values.</string>
 
 </resources>
