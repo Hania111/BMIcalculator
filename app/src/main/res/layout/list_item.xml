@@ -35,11 +35,10 @@
             android:textSize="@dimen/standardTextSize" />
 
         <TextView
-            android:id="@+id/bmiMeaningTV"
+            android:id="@+id/bmiDateTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/standardTextSize"
-            android:textStyle="bold" />
+            android:textSize="@dimen/standardTextSize" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
