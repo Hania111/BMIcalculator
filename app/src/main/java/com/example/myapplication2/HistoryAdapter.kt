@@ -13,7 +13,7 @@ class HistoryAdapter (private val BmiList : List<BmiRecord>) : RecyclerView.Adap
         val weightTV : TextView = itemView.findViewById<TextView>(R.id.weightTv)
         val heightTV : TextView = itemView.findViewById<TextView>(R.id.heightTV)
         val bmiTV : TextView = itemView.findViewById<TextView>(R.id.bmiTV)
-        val bmiMeaningTV : TextView = itemView.findViewById<TextView>(R.id.bmiMeaningTV)
+        val bmiDateTV : TextView = itemView.findViewById<TextView>(R.id.bmiDateTV)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -32,6 +32,7 @@ class HistoryAdapter (private val BmiList : List<BmiRecord>) : RecyclerView.Adap
         holder.weightTV.text = context.getString(R.string.weight_text, currentItem.weight.toString(), currentItem.weightUnit)
         holder.heightTV.text = context.getString(R.string.height_text, currentItem.height.toString(), currentItem.heightUnit)
         holder.bmiTV.text = context.getString(R.string.bmi_text, currentItem.bmi.toString())
+        holder.bmiDateTV.text = currentItem.date
     }
 }
 

@@ -9,7 +9,7 @@ data class BmiRecord(
     val height: Double?,
     val weightUnit: String,
     val heightUnit: String,
-    //val unitSystem: UnitSystem?,
+    val date: String
 ){
     fun toJson(): String {
         return Gson().toJson(this)
