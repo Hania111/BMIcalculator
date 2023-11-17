@@ -21,6 +21,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.lifecycleScope
+import com.example.myapplication2.unit.system.UnitSystemType
 //import com.plcoding.datastoreandroid.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -71,6 +72,12 @@ class MainActivity : AppCompatActivity() {
             outState.putString("SavedBmiRecord", it.toJson())
         }
         outState.putInt("CurrentRecord", currentRecord)
+        val unitSystemType = when (currentUnitSystem) {
+            is MetricSystem -> UnitSystemType.METRIC.typeName
+            is ImperialSystem -> UnitSystemType.IMPERIAL.typeName
+            else -> throw IllegalArgumentException("Unknown UnitSystem type")
+        }
+        outState.putString("CurrentUnitSystemType", unitSystemType)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -79,7 +86,14 @@ class MainActivity : AppCompatActivity() {
             latestBmiRecord = BmiRecord.fromJson(it)
         }
         currentRecord = savedInstanceState.getInt("CurrentRecord", 0)
+        val unitSystemType = savedInstanceState.getString("CurrentUnitSystemType")
+        currentUnitSystem = when (unitSystemType) {
+            UnitSystemType.METRIC.typeName -> MetricSystem()
+            UnitSystemType.IMPERIAL.typeName -> ImperialSystem()
+            else -> throw IllegalArgumentException("Unknown UnitSystem type")
+        }
         printBMI()
+        setMessage()
     }
 
     private fun handleCalculateButtonClick(){

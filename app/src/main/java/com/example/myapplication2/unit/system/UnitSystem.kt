@@ -10,3 +10,8 @@ interface UnitSystem {
 
     fun unitWeight():String
 }
+
+enum class UnitSystemType(val typeName: String) {
+    METRIC("MetricSystem"),
+    IMPERIAL("ImperialSystem")
+}
