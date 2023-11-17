@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
 
     fun openBMIdescriptionActivity(){
-        if (latestBmiRecord!!.bmi!= 0.0){
+        if (latestBmiRecord!= null ){
             val intent = Intent(this, BmiDescriptionActivity::class.java)
             intent.putExtra("BMI_INTERPRETATION_KEY", currentInterpretation)
             intent.putExtra("BMI_COLOR_KEY", currentColor)
@@ -230,6 +230,7 @@ class MainActivity : AppCompatActivity() {
         weight.text.clear()
         result.text=" "
         currentColor = Color.parseColor("#00000000")
+        latestBmiRecord = null
         result.setBackgroundColor(currentColor!!)
     }
 
